@@ -1,0 +1,128 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+-- conky config for X
+-- Auther : philosophos<philosoph@yeah.com>
+-- GitHub : https://github.com/philosophos/conky.conf
+
+conky.config = {
+    alignment = 'middle_left',
+    background = yes,
+    border_width = 0,
+	color0 = '#999999',
+	color1 = '#cccccc',
+	color2 = '#ff0000',
+	color3 = '#00ff00',
+	color4 = '#0000ff',
+	color5 = '#ffcc00',
+	color6 = '#ccff00',
+	color7 = '#0099cc',
+	color8 = '#cc9900',
+	color9 = '#333333',
+    --cpu_avg_samples = 2,
+	--default_color = 'white',
+	--default_bar_height = 3,
+	--default_bar_width = 0,
+	--default_gauge_height = 25,
+	--default_gauge_width = 40,
+	--default_graph_height = 25,
+	--default_graph_width = ,
+    --default_outline_color = 'white',
+    --default_shade_color = 'white',
+	--disable_auto_reload = true,
+	diskio_avg_samples = 3,
+	--display = ,
+	--xinerama_head = ,
+	double_buffer = true,
+    --draw_borders = false,
+    --draw_graph_borders = true,
+    --draw_outline = false,
+    --draw_shades = false,
+    --extra_newline = false,
+    font = 'Canterall Regular :size=10',
+    gap_x = 0,
+    gap_y = -10,
+	--http_refresh = false,
+	if_up_strictness = 'link',
+	--max_text_width = 0,
+	--max_user_text = 16384,
+	--maximum_width = 300,
+    --minimum_height = 5,
+	--minimum_width = 100,
+    net_avg_samples = 4,
+    --no_buffers = true,
+	--nvidia_display = ,
+    --out_to_console = false,
+	--out_to_http = false,
+	--out_to_ncurses = false,
+    --out_to_stderr = false,
+	--out_to_x = true,
+	--override_utf8_locale = true,
+    own_window = true,
+    --own_window_class = 'Conky',
+	--own_window_colour = '#000000'
+	--own_window_title = 'conky0 (<hostname>)'
+	own_window_transparent = true,
+    own_window_type = 'override',
+	--short_units = true,
+    --show_graph_scale = false,
+    --show_graph_range = false,
+    --stippled_borders = 0,
+	--text_buffer_size = 256,
+	--top_cpu_separate = true,
+	--top_name_verbose = true,
+	--top_name_width = 15,
+	--total_run_times = 0,
+    update_interval = 1,
+	update_interval_on_battery = 5,
+    use_spacer = 'none',
+    use_xft = true
+}
+
+--[[
+${color grey}MEM Usage:$color $memperc% ${membar 8 00ff00 ff0000}
+$memwithbuffers $memdirty $memeasyfree $memfree
+--]]
+conky.text = [[
+  ${goto 230}${color #000000}${memgraph 20,150 000000 ff0000}
+  ${voffset -32}${color green}RAM: ${color #ffffff}$memperc% ( $mem / $memmax )
+  ${voffset 2}${color green}CPU Frequency :$color $freq_g GHz
+  CPU Usage :
+  ${voffset 5}                ${color green} 1 : ${color red}${cpu cpu1}% ${goto 10}${cpubar cpu1 18,100}  \
+  ${color green}              2 : ${color red}${cpu cpu2}% ${goto 110}${cpubar cpu2 18,100}  \
+  ${color green}              3 : ${color red}${cpu cpu3}% ${goto 210}${cpubar cpu3 18,100}  \
+  ${color green}              4 : ${color red}${cpu cpu4}% ${goto 310}${cpubar cpu4 18,100}
+  ${voffset -7}${color 000000}${offset -10}${hr 6}
+  ${voffset -3}${color green}Networking:
+   ${color green}IP : ${color #9966ff}${addr wlp2s0}${color green}${alignr}AP MAC : ${color #9966ff}${wireless_ap wlp2s0}
+   ${color green}Channel: ${color7}${wireless_channel wlp2s0}${color green}${alignr}Freq: ${color7}${wireless_freq wlp2s0}
+   ${color green}Mode: ${color7}${wireless_mode wlp2s0}${color green}${alignr}ESSID: ${color8}${wireless_essid wlp2s0}
+  ${voffset 6}${color efefef}D:${totaldown wlp2s0}          ${downspeed wlp2s0}\
+   ${alignr}U:${totalup wlp2s0}          ${upspeed wlp2s0}
+  ${color 000000}${downspeedgraph wlp2s0 20,150 000000 ff0000 } ${alignr} ${color 000000}${upspeedgraph wlp2s0 20,150 000000 ff0000 }
+  ${voffset -15}${offset -10}${color 000000}${hr 6}
+  ${voffset -5}${color green}Disk I/O:
+   ${color #efefef}${color #efefef}     Read  :          ${diskio_read sda} \
+   ${alignr}${color #efefef}${diskio_write sda}          ${color #efefef} :  Write     
+  ${color #000000}${diskiograph_read 20,150 000000 ff0000} ${alignr} ${color #000000}${diskiograph_write 20,150 000000 ff0000}
+  ${voffset 2}${color green}File systems: 
+   ${color green}/${goto 100}${color efefef}[ ${fs_used /} / ${color efefef}${fs_size /} ]${goto 300}${color red}${fs_bar 5 /}
+   ${color green}/root${goto 100}${color efefef}[ ${fs_used /root} / ${color efefef}${fs_size /root} ]${goto 300}${color red}${fs_bar 5 /root}
+  ${offset -19}${color 000000}${hr 6}
+  ${voffset -2}${color #00ff00}Swap Usage: ${goto 100}${color efefef}$swapperc%  [ $swap/$swapmax ]
+  ${voffset 2}${color #00ff00}Battery: ${goto 100}${color #efefef}${battery}   ($battery_time)
+  ${color #00ff00}Temp :${goto 100}${color #efefef}${acpitemp} 'C
+  ${voffset 5}${color green}Processes:${goto 200}$color $processes
+  ${color green}Threads:${goto 200}$color $threads
+  ${color green}Running Process:${goto 200}$color $running_processes
+  ${color green}Running Threads:${goto 200}$color $running_threads
+  ${color green}Uptime:${goto 200}$color$uptime
+  ${voffset -5}${offset -11}${color 000000}${hr 6}
+  ${voffset -3}${color green}PROCESS${goto 160}  PID${goto 210}  MEM%${color efefef}
+  ${top_mem name 1} ${goto 160} ${top_mem pid 1} ${goto 210} ${top_mem mem 1}
+  ${top_mem name 2} ${goto 160} ${top_mem pid 2} ${goto 210} ${top_mem mem 2}
+  ${top_mem name 3} ${goto 160} ${top_mem pid 3} ${goto 210} ${top_mem mem 3}
+  ${top_mem name 4} ${goto 160} ${top_mem pid 4} ${goto 210} ${top_mem mem 4}
+  ${top_mem name 5} ${goto 160} ${top_mem pid 5} ${goto 210} ${top_mem mem 5}
+  ${top_mem name 6} ${goto 160} ${top_mem pid 6} ${goto 210} ${top_mem mem 6}
+  ${top_mem name 7} ${goto 160} ${top_mem pid 7} ${goto 210} ${top_mem mem 7}
+  ${top_mem name 8} ${goto 160} ${top_mem pid 8} ${goto 210} ${top_mem mem 8}
+]]
